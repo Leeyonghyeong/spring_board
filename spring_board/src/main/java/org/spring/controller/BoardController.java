@@ -58,8 +58,10 @@ public class BoardController {
 	
 	// 글 등록 페이지 이동
 	@RequestMapping(value="/register", method=RequestMethod.GET)
-	public void registGET(BoardVO vo, Model model) throws Exception {
+	public String registGET(BoardVO vo, Model model) throws Exception {
 		logger.info("----------------regist get----------------");
+		
+		return "board/register";
 	}
 	
 	// 글 등록 처리

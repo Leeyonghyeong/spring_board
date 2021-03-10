@@ -9,6 +9,7 @@ public class BoardVO {
 	private String writer; 
 	private Date regdate;
 	private int viewcnt;
+	private int replycnt;
 	
 	public BoardVO() {
 		// TODO Auto-generated constructor stub
@@ -61,14 +62,23 @@ public class BoardVO {
 	public void setViewcnt(int viewcnt) {
 		this.viewcnt = viewcnt;
 	}
+	
+	public int getReplycnt() {
+		return replycnt;
+	}
 
-	public BoardVO(Integer bno, String title, String content, String writer, Date regdate, int viewcnt) {
+	public void setReplycnt(int replycnt) {
+		this.replycnt = replycnt;
+	}
+
+	public BoardVO(Integer bno, String title, String content, String writer, Date regdate, int viewcnt, int replycnt) {
 		this.bno = bno;
 		this.title = title;
 		this.content = content;
 		this.writer = writer;
 		this.regdate = regdate;
 		this.viewcnt = viewcnt;
+		this.replycnt = replycnt;
 	}
 
 	@Override

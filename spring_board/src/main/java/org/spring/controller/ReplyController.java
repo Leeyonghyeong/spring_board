@@ -93,13 +93,13 @@ public class ReplyController {
 		return entity;
 	}
 	
-	@RequestMapping(value="/{rno}", method = RequestMethod.DELETE)
-	public ResponseEntity<String> delete(@PathVariable("rno") Integer rno) {
+	@RequestMapping(value="/{rno}/{bno}", method = RequestMethod.DELETE)
+	public ResponseEntity<String> delete(@PathVariable("rno") Integer rno, @PathVariable("bno") Integer bno) {
 		
 		ResponseEntity<String> entity = null;
 		
 		try {
-			service.delete(rno);
+			service.delete(rno, bno);
 			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();

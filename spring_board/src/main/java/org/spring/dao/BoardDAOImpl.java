@@ -1,6 +1,8 @@
 package org.spring.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -18,15 +20,21 @@ public class BoardDAOImpl implements BoardDAO {
 	private static String namespace = "boardMapper";
 	
 	@Override
-	public void create(BoardVO vo) throws Exception {
+	public List<BoardVO> listCriteria(SearchCriteria scri) throws Exception {
 		// TODO Auto-generated method stub
-		session.insert(namespace + ".create", vo);
+		return session.selectList(namespace + ".listCriteria", scri);
 	}
 			
 	@Override
 	public BoardVO selectBoard(Integer bno) throws Exception {
 		// TODO Auto-generated method stub
 		return session.selectOne(namespace + ".selectBoard", bno);
+	}
+	
+	@Override
+	public void create(BoardVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		session.insert(namespace + ".create", vo);
 	}
 	
 	@Override
@@ -42,14 +50,26 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 	
 	@Override
-	public List<BoardVO> listCriteria(SearchCriteria scri) throws Exception {
-		// TODO Auto-generated method stub
-		return session.selectList(namespace + ".listCriteria", scri);
-	}
-	
-	@Override
 	public int totalCount(SearchCriteria scri) throws Exception {
 		// TODO Auto-generated method stub
 		return session.selectOne(namespace + ".totalCount", scri);
+	}
+	
+	@Override
+	public void updateReplyCnt(Integer bno, int amount) throws Exception {
+		// TODO Auto-generated method stub		
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("bno", bno);
+		map.put("amount", amount);
+		
+		session.update(namespace + ".updateReplyCnt", map);
+	}
+	
+	@Override
+	public void updateViewCnt(Integer bno) throws Exception {
+		// TODO Auto-generated method stub
+		session.update(namespace + ".updateViewCnt", bno);
 	}
 }

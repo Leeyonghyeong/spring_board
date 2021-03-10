@@ -303,7 +303,7 @@
 		const rno = document.getElementById("hiddenRno").value;
 		let div = document.getElementById("replies");
 		
-		fetch('http://172.30.1.9:8080/api/reply/' + rno, {
+		fetch('http://172.30.1.9:8080/api/reply/' + rno + '/' + bno, {
 	        method: 'DELETE'
 	    }).then(function(response) {
 	        return response.text();

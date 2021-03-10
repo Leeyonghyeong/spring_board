@@ -26,7 +26,7 @@
 	    
 	    <div class="col-4">
 	    	<button class="btn btn-secondary" onclick="searchGetForm()">검색</button>
-	    	<button class="btn btn-warning" onclick="reset()">초기화</button>
+	    	<a class="btn btn-primary" href="/register">글등록</a>
 	    </div>	  
 	    
 	    <div class="col-2">
@@ -41,18 +41,21 @@
     <table class="table table-dark table-striped">
         <thead>
             <tr>
-                <th scope="col" class="text-center">BNO</th>
-                <th scope="col">TITLE</th>
-                <th scope="col" class="text-center">WRITER</th>
-                <th scope="col" class="text-center">REGDATE</th>
-                <th scope="col" class="text-center">VIEWCNT</th>
+                <th scope="col" class="text-center">글번호</th>
+                <th scope="col">제목</th>
+                <th scope="col" class="text-center">작성자</th>
+                <th scope="col" class="text-center">등록일자</th>
+                <th scope="col" class="text-center">조회수</th>
             </tr>
         </thead>
         <tbody>    
             <c:forEach items="${list }" var="list">
 	            <tr>
 	                <th scope="row" class="col-1 text-center">${list.bno }</th>
-	                <td><a href="/list/${list.bno }${pageMaker.makeQuery(pageMaker.cri.page) }">${list.title }</a></td>
+	                <td>
+	                	<a href="/list/${list.bno }${pageMaker.makeQuery(pageMaker.cri.page) }">${list.title }</a>
+	                	<sapn class="badge rounded-pill bg-success">${list.replycnt }</sapn>
+	                </td>
 	                <td class="col-2 text-center">${list.writer }</td>
 	                <td class="col-2 text-center"><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${list.regdate }" /></td>
 	                <td class="col-1 text-center"><sapn class="badge bg-secondary">${list.viewcnt }</sapn></td>
@@ -62,51 +65,41 @@
     </table>
     
 	<div class="row">
-		<div class="col-1">
-		
-		</div>
-		
-		<div class="col-10">
-			<nav aria-label="Page navigation example">
-		        <ul class="pagination justify-content-center">
-		        
-		            <li class="page-item <c:out value="${pageMaker.start ? '':'disabled' }"/>">
-		                <a class="page-link" href="${pageMaker.makeQuery(pageMaker.startPage - 1) }" aria-label="start">
-		                    <span aria-hidden="true"><i class="bi bi-chevron-double-left"></i></span>
-		                </a>
-		            </li>
-		            
-		            <li class="page-item <c:out value="${pageMaker.prev ? '':'disabled' }"/>">
-		                <a class="page-link" href="${pageMaker.makeQuery(pageMaker.cri.page - 1) }" aria-label="Previous">
-		                    <span aria-hidden="true"><i class="bi bi-chevron-left"></i></span>
-		                </a>
-		            </li>
-		            
-		            <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-		            	
-		            	<li class="page-item <c:out value="${pageMaker.cri.page == idx? 'active':'' }" />">
-		            		<a class="page-link" href="${pageMaker.makeQuery(idx) }">${ idx }</a>
-		            	</li>
-		            </c:forEach>
-		            
-		            <li class="page-item <c:out value="${pageMaker.next ? '':'disabled' }"/>">
-		                <a class="page-link" href="${pageMaker.makeQuery(pageMaker.cri.page + 1) }" aria-label="Next">
-		                    <span aria-hidden="true"><i class="bi bi-chevron-right"></i></span>
-		                </a>
-		            </li>
-		            
-		            <li class="page-item <c:out value="${pageMaker.end && pageMaker.endPage > 0 ? '':'disabled' }"/>">
-		                <a class="page-link" href="${pageMaker.makeQuery(pageMaker.endPage + 1) }" aria-label="end">
-		                    <span aria-hidden="true"><i class="bi bi-chevron-double-right"></i></span>
-		                </a>
-		            </li>
-		        </ul>
-		    </nav>
-		</div>
-		       
-	    <div class="col-1">
-            <a class="btn btn-primary" href="/board/register">글등록</a>
-        </div>
+		<nav aria-label="Page navigation example">
+	        <ul class="pagination justify-content-center">
+	        
+	            <li class="page-item <c:out value="${pageMaker.start ? '':'disabled' }"/>">
+	                <a class="page-link" href="${pageMaker.makeQuery(pageMaker.startPage - 1) }" aria-label="start">
+	                    <span aria-hidden="true"><i class="bi bi-chevron-double-left"></i></span>
+	                </a>
+	            </li>
+	            
+	            <li class="page-item <c:out value="${pageMaker.prev ? '':'disabled' }"/>">
+	                <a class="page-link" href="${pageMaker.makeQuery(pageMaker.cri.page - 1) }" aria-label="Previous">
+	                    <span aria-hidden="true"><i class="bi bi-chevron-left"></i></span>
+	                </a>
+	            </li>
+	            
+	            <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+	            	
+	            	<li class="page-item <c:out value="${pageMaker.cri.page == idx? 'active':'' }" />">
+	            		<a class="page-link" href="${pageMaker.makeQuery(idx) }">${ idx }</a>
+	            	</li>
+	            </c:forEach>
+	            
+	            <li class="page-item <c:out value="${pageMaker.next ? '':'disabled' }"/>">
+	                <a class="page-link" href="${pageMaker.makeQuery(pageMaker.cri.page + 1) }" aria-label="Next">
+	                    <span aria-hidden="true"><i class="bi bi-chevron-right"></i></span>
+	                </a>
+	            </li>
+	            
+	            <li class="page-item <c:out value="${pageMaker.end && pageMaker.endPage > 0 ? '':'disabled' }"/>">
+	                <a class="page-link" href="${pageMaker.makeQuery(pageMaker.endPage + 1) }" aria-label="end">
+	                    <span aria-hidden="true"><i class="bi bi-chevron-double-right"></i></span>
+	                </a>
+	            </li>
+	        </ul>
+	    </nav>
 	</div>
 	
 	<form id="form">
@@ -127,7 +120,7 @@
 	
 	    document.getElementById("perPageNum").value = perPageNum;
 	
-	    form.action = "/board/";
+	    form.action = "/";
 	    form.method = "GET";
 	    form.submit();
 	}
@@ -146,13 +139,13 @@
 	    document.getElementById("searchType").value = searchType;
 	    document.getElementById("keyword").value = keyword;	    
 	
-	    form.action = "/board/";
+	    form.action = "/";
 	    form.method = "GET";
 	    form.submit();
 	}
 	
 	function reset() {
-		self.location = "/board/"
+		self.location = "/"
 	}
 </script>
     

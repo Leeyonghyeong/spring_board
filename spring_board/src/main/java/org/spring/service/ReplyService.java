@@ -13,7 +13,7 @@ public interface ReplyService {
 	
 	public void update(ReplyVO vo) throws Exception;
 	
-	public void delete(Integer rno) throws Exception;
+	public void delete(Integer rno, Integer bno) throws Exception;
 	
 	public int count(Integer bno) throws Exception;
 }

@@ -8,6 +8,8 @@ import org.spring.dao.BoardDAO;
 import org.spring.searching.SearchCriteria;
 import org.spring.vo.BoardVO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -16,15 +18,23 @@ public class BoardServiceImpl implements BoardService {
 	private BoardDAO dao;
 	
 	@Override
-	public void regist(BoardVO vo) throws Exception {
+	public List<BoardVO> listCriteria(SearchCriteria scri) throws Exception {
 		// TODO Auto-generated method stub
-		dao.create(vo);
+		return dao.listCriteria(scri);
 	}
 	
 	@Override
+	@Transactional(isolation=Isolation.READ_COMMITTED)
 	public BoardVO read(Integer bno) throws Exception {
 		// TODO Auto-generated method stub
+		dao.updateViewCnt(bno);
 		return dao.selectBoard(bno);
+	}
+	
+	@Override
+	public void regist(BoardVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		dao.create(vo);
 	}
 	
 	@Override
@@ -37,12 +47,6 @@ public class BoardServiceImpl implements BoardService {
 	public void delete(Integer bno) throws Exception {
 		// TODO Auto-generated method stub
 		dao.delete(bno);
-	}
-	
-	@Override
-	public List<BoardVO> listCriteria(SearchCriteria scri) throws Exception {
-		// TODO Auto-generated method stub
-		return dao.listCriteria(scri);
 	}
 	
 	@Override
