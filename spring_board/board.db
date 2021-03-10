@@ -1,0 +1,30 @@
+CREATE TABLE board_user (
+  userid VARCHAR(50) NOT NULL,
+  password VARCHAR(50) NOT NULL,
+  username VARCHAR(50) NOT NULL,
+  email VARCHAR(100) DEFAULT NULL,
+  regdate TIMESTAMP NULL DEFAULT now(),
+  updatedate TIMESTAMP NULL DEFAULT now(),
+  PRIMARY KEY (userid)
+);
+
+CREATE TABLE board (
+	bno INT NOT NULL AUTO_INCREMENT,
+	title VARCHAR(200) NOT NULL,
+	content TEXT NULL,
+	writer VARCHAR(50) NOT NULL,
+	regdate TIMESTAMP NOT NULL DEFAULT now(),
+	viewcnt INT DEFAULT 0,
+	PRIMARY KEY (bno)
+);
+
+create table reply (
+	rno int NOT NULL AUTO_INCREMENT,
+    bno int NOT NULL DEFAULT 0,
+    replytext varchar(1000) NOT NULL,
+    replyer varchar(50) NOT NULL,
+    regdate TIMESTAMP NOT NULL DEFAULT now(),
+    updatedate TIMESTAMP NOT NULL DEFAULT now(),
+    primary key(rno),
+    constraint fk_board foreign key(bno) references board(bno) ON DELETE cascade
+);
