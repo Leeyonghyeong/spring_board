@@ -5,7 +5,7 @@
 <div class="container mt-5">
     <h1 class="display-5 mb-5" style="font-weight: bold;">게시물 수정</h1>
 	<hr>
-    <form role="form" method="POST" action="/board/update/">
+    <form role="form" method="POST" action="/update/">
     	<input type="hidden" name="bno" value="${board.bno }">
     	<input type="hidden" name="page" value="${pageMaker.cri.page }">
     	<input type="hidden" name="perPageNum" value="${pageMaker.cri.perPageNum }">
@@ -24,7 +24,7 @@
             <textarea class="form-control" id="content" name="content" style="height: 300px">${board.content }</textarea>
         </div>
         <button type="submit" class="btn btn-warning">수정</button>
-        <a href="/board/${pageMaker.makeQuery(pageMaker.cri.page) }" class="btn btn-primary">취소</a>
+        <a href="/${pageMaker.makeQuery(pageMaker.cri.page) }" class="btn btn-primary">취소</a>
     </form>
 </div>
 

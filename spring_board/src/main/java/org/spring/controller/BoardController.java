@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/board/*")
+@RequestMapping("/*")
 public class BoardController {
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
@@ -72,7 +72,7 @@ public class BoardController {
 		
 		ra.addFlashAttribute("result", "InsertOK");
 		
-		return "redirect:/board/";
+		return "redirect:/";
 	}
 	
 	// 글 수정 페이지 이동
@@ -103,7 +103,7 @@ public class BoardController {
 		ra.addAttribute("keyword", scri.getKeyword());
 		ra.addFlashAttribute("result", "updateOK");
 		
-		return "redirect:/board/";
+		return "redirect:/";
 	}
 	
 	// 글 삭제 처리
@@ -119,7 +119,7 @@ public class BoardController {
 		ra.addAttribute("keyword", scri.getKeyword());
 		ra.addFlashAttribute("result", "DeleteOK");
 		
-		return "redirect:/board/";
+		return "redirect:/";
 	}
 	
 	

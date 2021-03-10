@@ -52,7 +52,7 @@
             <c:forEach items="${list }" var="list">
 	            <tr>
 	                <th scope="row" class="col-1 text-center">${list.bno }</th>
-	                <td><a href="/board/list/${list.bno }${pageMaker.makeQuery(pageMaker.cri.page) }">${list.title }</a></td>
+	                <td><a href="/list/${list.bno }${pageMaker.makeQuery(pageMaker.cri.page) }">${list.title }</a></td>
 	                <td class="col-2 text-center">${list.writer }</td>
 	                <td class="col-2 text-center"><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${list.regdate }" /></td>
 	                <td class="col-1 text-center"><sapn class="badge bg-secondary">${list.viewcnt }</sapn></td>

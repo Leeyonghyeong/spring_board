@@ -30,9 +30,9 @@
         <label for="content" class="form-label">내용</label>
         <textarea class="form-control" id="content" name="content" style="height: 300px" readonly>${board.content }</textarea>
     </div>
-    <a class="btn btn-warning" href="/board/update/${bno }${pageMaker.makeQuery(pageMaker.cri.page) }">수정</a>
+    <a class="btn btn-warning" href="/update/${bno }${pageMaker.makeQuery(pageMaker.cri.page) }">수정</a>
     <button type="submit" class="btn btn-danger" onclick="boardDelete()">삭제</button>
-    <a class="btn btn-primary" href="/board/${pageMaker.makeQuery(pageMaker.cri.page) }">목록보기</a>
+    <a class="btn btn-primary" href="/${pageMaker.makeQuery(pageMaker.cri.page) }">목록보기</a>
     
     
 	<div class="row box">
@@ -116,7 +116,7 @@
 	const form = document.getElementById("form");
 	
 	function boardDelete() {
-	    form.action = "/board/delete/";
+	    form.action = "/delete/";
 	    form.submit();
 	}
   

@@ -17,7 +17,7 @@
   	<!-- 상단 navbar -->
   	<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark" style="background-color: #e3f2fd;">
         <div class="container-fluid px-5">
-            <a class="navbar-brand" href="/board/"><i class="bi bi-clipboard pe-2" style="font-size: 1.29rem; color: cornflowerblue;"></i>My Board</a>
+            <a class="navbar-brand" href="/"><i class="bi bi-clipboard pe-2" style="font-size: 1.29rem; color: cornflowerblue;"></i>My Board</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -25,7 +25,7 @@
             <div class="navbar-collapse collapse justify-content-end" id="navbarNavDropdown" >
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/board/">Home</a>
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Features</a>
