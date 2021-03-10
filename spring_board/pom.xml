@@ -179,6 +179,21 @@
 		    <artifactId>spring-aop</artifactId>
 		    <version>${org.springframework-version}</version>
 		</dependency>
+		
+		<!-- aspectjweaver -->
+		<dependency>
+		    <groupId>org.aspectj</groupId>
+		    <artifactId>aspectjweaver</artifactId>
+		    <version>1.9.6</version>
+		</dependency>
+		
+		<!-- aspectjrt -->
+		<dependency>
+		    <groupId>org.aspectj</groupId>
+		    <artifactId>aspectjrt</artifactId>
+		    <version>1.9.6</version>
+		</dependency>
+				
 						     
 	</dependencies>
     <build>
