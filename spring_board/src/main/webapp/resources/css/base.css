@@ -1,0 +1,11 @@
+.content-body {
+	border : 1px solid #ced4da; 
+	border-radius: .25rem; 
+	background-color: #e9ecef; 
+	padding: .375rem .75rem;
+}
+
+.img-area img {
+	width: 100%;
+	height: auto;
+}

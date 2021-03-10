@@ -28,7 +28,12 @@
     </div>
     <div class="mb-3">
         <label for="content" class="form-label">내용</label>
-        <textarea class="form-control" id="content" name="content" style="height: 300px" readonly>${board.content }</textarea>
+        <div class="content-body text-center">
+       		<div class="text-area my-3">${board.content }</div>
+       		<div class="img-area">
+				<img src="https://blog.yena.io/assets/post-img/171123-nachoi-300.jpg" class="img" alt="simson" />
+       		</div>
+        </div>
     </div>
     <a class="btn btn-warning" href="/update/${bno }${pageMaker.makeQuery(pageMaker.cri.page) }">수정</a>
     <button type="submit" class="btn btn-danger" onclick="boardDelete()">삭제</button>
@@ -199,7 +204,7 @@
 	function addReply() {
 		const replyer = document.getElementById("replyer").value;
 		const replytext = document.getElementById("replytext").value;
-		let div = document.getElementById("replies");
+		const div = document.getElementById("replies");
 		
 		fetch('http://172.30.1.9:8080/api/reply/', {
 	        method: 'POST',
@@ -231,7 +236,7 @@
 	}
 	
 	function updateReply(rno) {
-		let replytext = document.getElementById("reply" + rno).innerText;
+		const replytext = document.getElementById("reply" + rno).innerText;
 
         let modifyHTML = '<div class="mb-3">';
         modifyHTML += '<label for="recipient-name" class="col-form-label">내용:</label>';
@@ -256,7 +261,7 @@
 	}
 	
 	function commitKind() {
-		let kind = document.getElementById("modalCommit").innerText;
+		const kind = document.getElementById("modalCommit").innerText;
 		if(kind == '수정') {
 			commitUpdate();
 		} else if(kind == '삭제') {
@@ -269,7 +274,7 @@
 	function commitUpdate() {
 		const rno = document.getElementById("hiddenRno").value;
 		const replytext = document.getElementById("recipient-name").value;
-		let div = document.getElementById("replies");
+		const div = document.getElementById("replies");
 		
 		fetch('http://172.30.1.9:8080/api/reply/' + rno, {
 	        method: 'PUT',
@@ -301,7 +306,7 @@
 	
 	function commitDelete() {
 		const rno = document.getElementById("hiddenRno").value;
-		let div = document.getElementById("replies");
+		const div = document.getElementById("replies");
 		
 		fetch('http://172.30.1.9:8080/api/reply/' + rno + '/' + bno, {
 	        method: 'DELETE'
@@ -330,7 +335,7 @@
 	}
 	
 	function showModal() {
-        var myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'), '');
+        const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'), '');
 
         myModal.show();
 
