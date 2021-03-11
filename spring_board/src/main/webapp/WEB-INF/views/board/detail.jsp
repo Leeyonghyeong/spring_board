@@ -143,6 +143,9 @@
 		if(files.length > 0) {
 			fetch('http://172.30.1.9:8080/files/deleteAllFile/', {
 		        method: 'POST',
+		        headers: {
+		            '${_csrf.headerName}': '${_csrf.token}',
+		        },
 		        body: files
 		    }).then(function(response) {
 		        return response.text();
@@ -240,8 +243,11 @@
 		
 		fetch('http://172.30.1.9:8080/api/reply/', {
 	        method: 'POST',
+	        headers: {
+	            '${_csrf.headerName}': '${_csrf.token}',
+	            "content-Type" : "application/json"
+	        },
 	        body: JSON.stringify({"bno" : bno, "replyer" : replyer, "replytext" : replytext}),
-	        headers: {"content-Type" : "application/json"}
 	    }).then(function(response) {
 	        return response.text();
 	    }).then(function(data) {

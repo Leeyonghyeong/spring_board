@@ -12,5 +12,11 @@ public class UserController {
 		
 		return "user/login";
 	}
+	
+	@RequestMapping(value="/denied_page")
+	public String deniedPage() throws Exception {
+		
+		return "denied_page";
+	}
 
 }

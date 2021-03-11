@@ -11,6 +11,13 @@
             <div class="col-4">
                 <h1 class="display-5 mb-5" style="font-weight: bold;">로그인</h1>
                 <hr>
+                <c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
+				    <font color="red">
+				            ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</p>
+				        <c:remove var="SPRING_SECURITY_LAST_EXCEPTION" scope="session"/>
+				    </font>
+				</c:if>
+
                 <form role="form" method="POST">
                     <div class="mb-3">
                         <label for="userid" class="form-label">ID</label>
@@ -31,7 +38,7 @@
                         </div>
                     </div>
                     
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_crsf.token}" />
+                    <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
                 </form>
             </div>
 

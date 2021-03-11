@@ -6,6 +6,7 @@
     <h1 class="display-5 mb-5" style="font-weight: bold;">게시물 등록</h1>
 	<hr>
     <form role="form" method="POST" id="registerForm">
+    	<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
         <div class="mb-3">
             <label for="title" class="form-label">제목</label>
             <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해주세요">

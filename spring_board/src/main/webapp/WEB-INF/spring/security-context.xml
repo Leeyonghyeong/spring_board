@@ -10,10 +10,10 @@
         
 	<http auto-config="true" use-expressions="true">
 		<!-- csrf 설정 -->
-		<csrf disabled="true"></csrf>
+		<csrf disabled="false"></csrf>
 		
 		<!-- 페이지 권한 설정 -->
-	    <intercept-url pattern="/delete" access="hasAnyRole('ROLE_USER', 'ROLE_MEMBER', 'ROLE_ADMIN')" />
+	    <intercept-url pattern="/delete" access="hasAnyRole('ROLE_USER', 'ROLE_MEMBER', 'ROLE_ADMIN')"/>
 	    <intercept-url pattern="/register/**" access="hasAnyRole('ROLE_USER', 'ROLE_MEMBER', 'ROLE_ADMIN')" />
 	    <intercept-url pattern="/update/**" access="hasAnyRole('ROLE_USER', 'ROLE_MEMBER', 'ROLE_ADMIN')" />
 	    <intercept-url pattern="/**" access="permitAll" />
@@ -26,6 +26,15 @@
 	    	login-page="/login"
 	    	default-target-url="/"
 	    />
+	    
+	    <!-- 403페이지 custom -->
+	    <!-- <access-denied-handler
+	    	error-page="/denied_page"
+	    />-->
+	    
+	    <!-- cors 설정(servlet-context.xml 에 cors 설정해야함 -->
+	    <cors />
+	    
 	</http>
 	
 	<authentication-manager>
