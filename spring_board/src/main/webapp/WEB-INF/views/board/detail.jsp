@@ -262,7 +262,7 @@
 	    	
 	    	getPage();
 	    }).catch(function(error) {
-	        console.log("error ----------->", error);
+	    	showModal("No Login");
 	    });;
 	    
 	}
@@ -373,6 +373,8 @@
         
         if(type == "Add Reply") {
         	document.getElementById("modal-body").innerHTML = '댓글이 등록 되었습니다.';
+        } else if(type == "No Login") {
+        	document.getElementById("modal-body").innerHTML = '로그인 후 이용 바랍니다.';
         } else {
         	document.getElementById("modal-body").innerHTML = '댓글이 달린 게시물은 삭제할 수 없습니다.';
         }
