@@ -32,20 +32,44 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
+	@Transactional
 	public void regist(BoardVO vo) throws Exception {
 		// TODO Auto-generated method stub
 		dao.create(vo);
+		
+		String[] files = vo.getFiles();
+		
+		if(files == null) { return; }
+		
+		for(String filename : files) {
+			dao.addFiles(filename);
+		}
 	}
 	
 	@Override
+	@Transactional
 	public void modify(BoardVO vo) throws Exception {
 		// TODO Auto-generated method stub
 		dao.update(vo);
+		
+		Integer bno = vo.getBno();
+		
+		dao.deleteFiles(bno);
+		
+		String[] files = vo.getFiles();
+		
+		if(files == null) { return; }
+		
+		for(String filename : files) {
+			dao.modifyFiles(bno, filename);
+		}
 	}
 	
 	@Override
+	@Transactional
 	public void delete(Integer bno) throws Exception {
 		// TODO Auto-generated method stub
+		dao.deleteFiles(bno);
 		dao.delete(bno);
 	}
 	
@@ -53,5 +77,11 @@ public class BoardServiceImpl implements BoardService {
 	public int totalCount(SearchCriteria scri) throws Exception {
 		// TODO Auto-generated method stub
 		return dao.totalCount(scri);
+	}
+	
+	@Override
+	public List<String> getFiles(Integer bno) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.getFiles(bno);
 	}
 }

@@ -72,4 +72,34 @@ public class BoardDAOImpl implements BoardDAO {
 		// TODO Auto-generated method stub
 		session.update(namespace + ".updateViewCnt", bno);
 	}
+	
+	@Override
+	public void addFiles(String filename) throws Exception {
+		// TODO Auto-generated method stub
+		session.insert(namespace + ".addFiles", filename);
+	}
+	
+	@Override
+	public List<String> getFiles(Integer bno) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectList(namespace + ".getFiles", bno);
+	}
+	
+	@Override
+	public void modifyFiles(Integer bno, String filename) throws Exception {
+		// TODO Auto-generated method stub
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("bno", bno);
+		map.put("filename", filename);
+		
+		session.insert(namespace + ".modifyFiles", map);
+	}
+	
+	@Override
+	public void deleteFiles(Integer bno) throws Exception {
+		// TODO Auto-generated method stub
+		session.delete(namespace + ".deleteFiles", bno);
+	}
 }

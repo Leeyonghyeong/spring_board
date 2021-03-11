@@ -24,5 +24,8 @@ public interface BoardService {
 	
 	// 모든 글 갯수 및 검색 조건에 맞는 글 갯수
 	public int totalCount(SearchCriteria scri) throws Exception;
+	
+	// 첨부파일 가져오기
+	public List<String> getFiles(Integer bno) throws Exception;
 
 }

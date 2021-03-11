@@ -1,5 +1,6 @@
 package org.spring.vo;
 
+import java.util.Arrays;
 import java.util.Date;
 
 public class BoardVO {
@@ -10,6 +11,8 @@ public class BoardVO {
 	private Date regdate;
 	private int viewcnt;
 	private int replycnt;
+	
+	private String[] files;
 	
 	public BoardVO() {
 		// TODO Auto-generated constructor stub
@@ -71,6 +74,14 @@ public class BoardVO {
 		this.replycnt = replycnt;
 	}
 
+	public String[] getFiles() {
+		return files;
+	}
+
+	public void setFiles(String[] files) {
+		this.files = files;
+	}
+
 	public BoardVO(Integer bno, String title, String content, String writer, Date regdate, int viewcnt, int replycnt) {
 		this.bno = bno;
 		this.title = title;
@@ -84,8 +95,8 @@ public class BoardVO {
 	@Override
 	public String toString() {
 		return "BoardVO [bno=" + bno + ", title=" + title + ", content=" + content + ", writer=" + writer + ", regdate="
-				+ regdate + ", viewcnt=" + viewcnt + "]";
+				+ regdate + ", viewcnt=" + viewcnt + ", replycnt=" + replycnt + ", files=" + Arrays.toString(files)
+				+ "]";
 	}
-	
-	
+
 }

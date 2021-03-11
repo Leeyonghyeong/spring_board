@@ -7,6 +7,14 @@
 		insert into board (title, content, writer) values (#{title}, #{content}, #{writer})
 	</insert>
 	
+	<insert id="addFiles">
+		insert into files (filename, bno) values (#{filename}, LAST_INSERT_ID())
+	</insert>
+	
+	<insert id="modifyFiles">
+		insert into files (filename, bno) values (#{filename}, #{bno})
+	</insert>
+	
 	<select id="selectBoard" resultType="BoardVO">
 		select * from board where bno = #{bno}
 	</select>
@@ -25,6 +33,10 @@
 		<include refid="search"></include>
 	</select>
 	
+	<select id="getFiles" resultType="string">
+		select filename from files where bno = #{bno}
+	</select>
+	
 	<update id="update">
 		update board set title = #{title}, content = #{content} where bno = #{bno}
 	</update>
@@ -39,6 +51,10 @@
 	
 	<delete id="delete">
 		delete from board where bno = #{bno}
+	</delete>
+	
+	<delete id="deleteFiles">
+		delete from files where bno = #{bno}
 	</delete>
 	
 	<sql id="search">

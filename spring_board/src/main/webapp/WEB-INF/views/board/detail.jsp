@@ -30,9 +30,13 @@
         <label for="content" class="form-label">내용</label>
         <div class="content-body text-center">
        		<div class="text-area my-3">${board.content }</div>
-       		<div class="img-area">
-				<img src="https://blog.yena.io/assets/post-img/171123-nachoi-300.jpg" class="img" alt="simson" />
-       		</div>
+       		
+       		<c:forEach items="${files }" var="file">
+	       		<div class="img-area mb-5" data-src="${file}">
+					<img src="/files/displayFile?fileName=${file }" class="img" alt="image" />
+	       		</div>
+	       	</c:forEach>
+	       	
         </div>
     </div>
     <a class="btn btn-warning" href="/update/${bno }${pageMaker.makeQuery(pageMaker.cri.page) }">수정</a>
@@ -121,7 +125,35 @@
 	const form = document.getElementById("form");
 	
 	function boardDelete() {
-	    form.action = "/delete/";
+		const replyExist = document.querySelectorAll(".bi-chat-dots");
+		
+		if(replyExist.length > 0) {
+			showModal("Exist Reply");
+			return;
+		}
+		
+		let files = [];
+		
+		document.querySelectorAll(".img-area").forEach(that => {
+			files.push(that.getAttribute("data-src"));
+		});
+		
+		console.log(files);
+		
+		if(files.length > 0) {
+			fetch('http://172.30.1.9:8080/files/deleteAllFile/', {
+		        method: 'POST',
+		        body: files
+		    }).then(function(response) {
+		        return response.text();
+		    }).then(function(data) {
+		    	console.log(data);
+		    }).catch(function(error) {
+		        console.log("error ----------->" + error);
+		    });;
+		}
+		
+		form.action = "/delete";
 	    form.submit();
 	}
   
@@ -214,7 +246,7 @@
 	        return response.text();
 	    }).then(function(data) {
 	    	if(data == "SUCCESS") {
-	    		showModal();
+	    		showModal("Add Reply");
 	    		if(totalCount < 1) {
 	    			totalCount = 1;
 	    		}
@@ -334,18 +366,22 @@
 	    });;
 	}
 	
-	function showModal() {
+	function showModal(type) {
         const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'), '');
 
         myModal.show();
+        
+        if(type == "Add Reply") {
+        	document.getElementById("modal-body").innerHTML = '댓글이 등록 되었습니다.';
+        } else {
+        	document.getElementById("modal-body").innerHTML = '댓글이 달린 게시물은 삭제할 수 없습니다.';
+        }
 
         document.getElementById('staticBackdropLabel').innerText = '알림';
-        document.getElementById("modal-body").innerHTML = '댓글이 등록 되었습니다.';
         document.getElementById("modalCommit").innerText = '확인';
 
         document.getElementById("modalClose").hidden = true;
     }
-</script>
-    
+</script>    
     
 <%@ include file="../include/footer.jsp" %>

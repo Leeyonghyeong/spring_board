@@ -5,7 +5,7 @@
 <div class="container mt-5">
     <h1 class="display-5 mb-5" style="font-weight: bold;">게시물 수정</h1>
 	<hr>
-    <form role="form" method="POST" action="/update/">
+    <form role="form" method="POST" action="/update/" id="registerForm">
     	<input type="hidden" name="bno" value="${board.bno }">
     	<input type="hidden" name="page" value="${pageMaker.cri.page }">
     	<input type="hidden" name="perPageNum" value="${pageMaker.cri.perPageNum }">
@@ -23,9 +23,22 @@
             <label for="content" class="form-label">내용</label>
             <textarea class="form-control" id="content" name="content" style="height: 300px">${board.content }</textarea>
         </div>
+        
+        <div class="mb-3">
+        	<div class="row">
+	    		<label class="col-6">이미지 업로드</label><label class="text-end col-6" id="sizeCheck">업로드 용량 (0.00 M)</label>
+	    	</div>
+	    	<div class="dropZone text-center align-middle mt-2">Drag & Drop</div>
+    	</div>
+    	
+		<div class="row uploadList">
+		</div>
+		
         <button type="submit" class="btn btn-warning">수정</button>
         <a href="/${pageMaker.makeQuery(pageMaker.cri.page) }" class="btn btn-primary">취소</a>
     </form>
 </div>
+
+<script src="/resources/js/fileUpload.js" crossorigin="anonymous"></script>
 
 <%@ include file="../include/footer.jsp" %>

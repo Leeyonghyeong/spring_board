@@ -29,3 +29,11 @@ create table reply (
     primary key(rno),
     constraint fk_board foreign key(bno) references board(bno) ON DELETE cascade
 );
+
+create table files (
+	filename varchar(150) NOT NULL,
+    bno int NOT NULL,
+    regdate timestamp DEFAULT now(),
+    primary key(filename),
+    constraint fk_board_files foreign key(bno) references board(bno)
+);

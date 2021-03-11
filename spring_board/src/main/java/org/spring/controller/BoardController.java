@@ -1,6 +1,8 @@
 package org.spring.controller;
 
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -11,10 +13,12 @@ import org.spring.service.BoardService;
 import org.spring.vo.BoardVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -37,6 +41,7 @@ public class BoardController {
 		pageMaker.setTotalCount(service.totalCount(scri));
 		
 		model.addAttribute("pageMaker", pageMaker);
+		model.addAttribute("title", "board");
 		
 		return "board/board";
 	}
@@ -52,6 +57,8 @@ public class BoardController {
 		model.addAttribute("pageMaker", pageMaker);
 		
 		model.addAttribute("board", service.read(bno));
+		model.addAttribute("files", service.getFiles(bno));
+		model.addAttribute("title", "detail");
 		
 		return "board/detail";
 	}
@@ -60,6 +67,8 @@ public class BoardController {
 	@RequestMapping(value="/register", method=RequestMethod.GET)
 	public String registGET(BoardVO vo, Model model) throws Exception {
 		logger.info("----------------regist get----------------");
+		
+		model.addAttribute("title", "register");
 		
 		return "board/register";
 	}
@@ -88,6 +97,8 @@ public class BoardController {
 		model.addAttribute("pageMaker", pageMaker);
 		
 		model.addAttribute("board", service.read(bno));
+		
+		model.addAttribute("title", "update");
 		
 		return "board/update";
 	}
@@ -123,6 +134,5 @@ public class BoardController {
 		
 		return "redirect:/";
 	}
-	
-	
+		
 }

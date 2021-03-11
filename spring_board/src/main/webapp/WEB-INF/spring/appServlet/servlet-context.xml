@@ -28,4 +28,8 @@
 		<beans:property name="maxUploadSize" value="10485760"></beans:property>
 	</beans:bean>
 	
+	<beans:bean id="uploadPath" class="java.lang.String">
+		<beans:constructor-arg value="C:\Users\lee\git\spring_board\spring_board\src\main\webapp\upload"></beans:constructor-arg>
+	</beans:bean>
+	
 </beans:beans>
