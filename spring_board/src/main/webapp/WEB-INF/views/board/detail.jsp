@@ -13,6 +13,13 @@
     	<input type="hidden" name="perPageNum" value="${pageMaker.cri.perPageNum }">
     	<input type="hidden" name="searchType" value="${pageMaker.cri.searchType }">
     	<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }">
+    	<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+    	<sec:authorize access="isAnonymous()">
+    		<input type="hidden" id="uid" value="">
+    	</sec:authorize>
+    	<sec:authorize access="isAuthenticated()">
+    		<input type="hidden" id="uid" value="<sec:authentication property="principal.userid" />">
+    	</sec:authorize>
 	</form>
     <div class="mb-3">
         <label for="title" class="form-label">제목</label>
@@ -39,31 +46,39 @@
 	       	
         </div>
     </div>
-    <a class="btn btn-warning" href="/update/${bno }${pageMaker.makeQuery(pageMaker.cri.page) }">수정</a>
-    <button type="submit" class="btn btn-danger" onclick="boardDelete()">삭제</button>
-    <a class="btn btn-primary" href="/${pageMaker.makeQuery(pageMaker.cri.page) }">목록보기</a>
+    <sec:authorize access="isAuthenticated()">
+    	<c:set var="uid"><sec:authentication property='principal.userid' /></c:set>
+    	
+    	<c:if test="${board.writer == uid}">
+    		<a class="btn btn-warning" href="/update/${bno }${pageMaker.makeQuery(pageMaker.cri.page) }">수정</a>
+    		<button type="submit" class="btn btn-danger" onclick="boardDelete()">삭제</button>
+    	</c:if>
+    </sec:authorize>
+    <a class="btn btn-primary" href="/${pageMaker.makeQuery(pageMaker.cri.page) }">목록보기 </a>
     
     
 	<div class="row box">
-        <div class="box-header mt-5">
-            <h3 class="bos-title">댓글 달기</h3>
-            <hr>
-        </div>
-        
-        <div class="box-body mb-5">
-            <div class="mb-3">
-                <label for="replyer" class="form-label">작성자</label>
-                <input type="text" class="form-control" id="replyer" name="replyer">
-            </div>
-            <div class="mb-3">
-                <label for="replytext" class="form-label">댓글</label>
-                <input type="text" class="form-control" id="replytext" name="replytext">
-            </div>
-            <button type="submit" class="btn btn-primary" onclick="addReply()">댓글등록</button>
-        	<hr>
-    	</div>
+		<sec:authorize access="isAuthenticated()">
+	        <div class="box-header mt-5">
+	            <h3 class="bos-title">댓글 달기</h3>
+	            <hr>
+	        </div>
+	        
+	        <div class="box-body">
+	            <div class="mb-3">
+	                <label for="replyer" class="form-label">작성자</label>
+	                <input type="text" class="form-control" id="replyer" name="replyer" value="<sec:authentication property="principal.userid" />" readonly>
+	            </div>
+	            <div class="mb-3">
+	                <label for="replytext" class="form-label">댓글</label>
+	                <input type="text" class="form-control" id="replytext" name="replytext">
+	            </div>
+	            <button type="submit" class="btn btn-primary" onclick="addReply()">댓글등록</button>
+	        	<hr>
+	    	</div>
+    	</sec:authorize>
 	
-	    <div class="box-footer" id="replies">
+	    <div class="box-footer mt-3" id="replies">
 	    	
 	    	<!-- 
 	        <div class="mb-3 bg-light border border-1 border-dark" >
@@ -190,20 +205,26 @@
 		
         for(let i = 0; i < list.length; i++) {
         	let grid = document.createElement("div");
+        	let gridText = ""
         	
         	grid.setAttribute("class", "mb-3 bg-light border border-1 border-dark");
             
-        	grid.innerHTML = '<div class="mb-1"><div class="row mt-3"><div class="col-6 ps-4">' +
+        	gridText += '<div class="mb-1"><div class="row mt-3"><div class="col-6 ps-4">' +
 									'<span><i class="bi bi-chat-dots"></i> ' + 
 									list[i].replyer + 
 									'</span></div><div class="col-6 text-end pe-4"><span><i class="bi bi-stopwatch"></i> ' + 
 									prettifyDate(list[i].regdate) + 
 									'</span></div></div><hr></div><div class="mb-1"><div class="px-2"  id="reply' + list[i].rno + '">' +
 									list[i].replytext +						       
-						    		'</div><hr></div><div class="mb-3"><div class="px-2">' +
-						        	'<button type="submit" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="updateReply(' + list[i].rno + ')">댓글 수정</button> ' +
-						        	'<button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="deleteReply(' + list[i].rno + ')">댓글 삭제</button>' +
-						    	'</div></div>';
+						    		'</div><hr></div>';
+			if(list[i].replyer == document.getElementById("uid").value) {
+				gridText += '<div class="mb-3"><div class="px-2">' + 
+							'<button type="submit" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="updateReply(' + list[i].rno + ')">댓글 수정</button> ' +
+	        				'<button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="deleteReply(' + list[i].rno + ')">댓글 삭제</button>' +
+	        				'</div></div>';
+			}
+						    	
+			grid.innerHTML = gridText;
 			div.appendChild(grid)
         }
         
@@ -263,7 +284,6 @@
 	    	div.innerHTML = '';
 	    	count = 1;
 	    		    	
-	    	document.getElementById("replyer").value = '';
 	    	document.getElementById("replytext").value = '';
 	    	
 	    	getPage();
@@ -317,7 +337,10 @@
 		fetch('http://172.30.1.9:8080/api/reply/' + rno, {
 	        method: 'PUT',
 	        body: JSON.stringify({"rno" : rno, "replytext" : replytext}),
-	        headers: {"content-Type" : "application/json"}
+	        headers: {
+	            '${_csrf.headerName}': '${_csrf.token}',
+	            "content-Type" : "application/json"
+	        },
 	    }).then(function(response) {
 	        return response.text();
 	    }).then(function(data) {
@@ -333,7 +356,6 @@
 	    	div.innerHTML = '';
 	    	count = 1;
 	    		    	
-	    	document.getElementById("replyer").value = '';
 	    	document.getElementById("replytext").value = '';
 	    	
 	    	getPage();
@@ -347,7 +369,11 @@
 		const div = document.getElementById("replies");
 		
 		fetch('http://172.30.1.9:8080/api/reply/' + rno + '/' + bno, {
-	        method: 'DELETE'
+	        method: 'DELETE',
+	        headers: {
+	            '${_csrf.headerName}': '${_csrf.token}',
+	            "content-Type" : "application/json"
+	        },
 	    }).then(function(response) {
 	        return response.text();
 	    }).then(function(data) {
@@ -363,7 +389,6 @@
 	    	div.innerHTML = '';
 	    	count = 1;
 	    		    	
-	    	document.getElementById("replyer").value = '';
 	    	document.getElementById("replytext").value = '';
 	    	
 	    	getPage();

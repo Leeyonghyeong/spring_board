@@ -6,14 +6,15 @@
     <h1 class="display-5 mb-5" style="font-weight: bold;">게시물 등록</h1>
 	<hr>
     <form role="form" method="POST" id="registerForm">
-    	<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+    	<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}" id="tokenValue"/>
+    	
         <div class="mb-3">
             <label for="title" class="form-label">제목</label>
             <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해주세요">
         </div>
         <div class="mb-3">
             <label for="writer" class="form-label">작성자</label>
-            <input type="text" class="form-control" id="writer" name="writer" placeholder="작성자를 입력해주세요">
+            <input type="text" class="form-control" id="writer" name="writer" readonly value="<sec:authentication property="principal.userid" />">
         </div>
         <div class="mb-3">
             <label for="content" class="form-label">내용</label >

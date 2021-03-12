@@ -10,7 +10,7 @@
     <meta name="author" content="L.Dev">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>${title } | My Board</title>
+    <title><c:if test="${title eq null }">login</c:if> ${title} | My Board</title>
 
     <!-- Bootstrap CSS -->
     <link rel="icon" type="image/png" sizes="16x16" href="/resources/img/favicon/favicon.png">
@@ -33,15 +33,22 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
-                    </li>
+                    
+                    <sec:authorize access="isAuthenticated()">
+	                    <li class="nav-item">
+	                        <a class="nav-link" href="#"><sec:authentication property="principal.username"></sec:authentication></a>
+	                    </li>
+	                </sec:authorize>
+	                
                     <li class="nav-item">
                     	<sec:authorize access="isAnonymous()">
 	                        <a class="nav-link" href="/login">Sign In</a>                    	
                     	</sec:authorize>
                     	<sec:authorize access="isAuthenticated()">
-	                        <a class="nav-link" href="/login">Sign Out</a>                    	
+                    		<form action="/logout" method="POST" name="form">
+                    			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+	                        </form>
+		                    <a class="nav-link" href="#" onclick="document.form.submit()">Sign Out</a>
                     	</sec:authorize>
                     </li>
                 </ul>

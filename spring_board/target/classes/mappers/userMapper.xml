@@ -3,20 +3,8 @@
 
 <mapper namespace="userMapper">
 
-	<select id="getTime" resultType="string">
-		select now()
-	</select>
-	
-	<insert id="insertUser">
-		insert into board_user (userid, password, username, email) values (#{userid}, #{password}, #{username}, #{email})
-	</insert>
-	
-	<select id="selectUser" resultType="UserVO">
-		select * from board_user where userid = #{userid}
-	</select>
-	
-	<select id="readWithPW" resultType="UserVO">
-		select * from board_user where userid = #{userid} and password = #{password}
+	<select id="getUser" resultType="UserDetailVO">
+		SELECT * FROM user where userid = #{userid}
 	</select>
 
 </mapper>

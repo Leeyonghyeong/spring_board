@@ -1,6 +1,7 @@
 const fileDropZone = document.querySelector(".dropZone");
 const fileDelete = document.querySelector(".bi-x-circle-fill");
 const form = document.getElementById("registerForm");
+const tokenValue = document.getElementById("tokenValue").value;
 
 const uploadSize = 10000000;
 let realSize = 0;
@@ -51,10 +52,13 @@ fileDropZone.addEventListener("drop", function(e) {
             }
         }
     }
-
+	
     fetch('http://172.30.1.9:8080/files', {
         method: 'POST',
         body: formData,
+        headers: {
+	    	"X-CSRF-TOKEN": tokenValue,
+	    }
     }).then(function(response) {
         return response.json();
     }).then(function(data) {
@@ -98,7 +102,10 @@ function deleteFile(fileName, num, size) {
 	
 	fetch('http://172.30.1.9:8080/files/deleteFile', {
         method: 'POST',
-        body: fileName
+        body: fileName,
+        headers: {
+	    	"X-CSRF-TOKEN": tokenValue,
+	    }
     }).then(function(response) {
         return response.text();
     }).then(function(data) {

@@ -6,6 +6,7 @@
     <h1 class="display-5 mb-5" style="font-weight: bold;">게시물 수정</h1>
 	<hr>
     <form role="form" method="POST" action="/update/" id="registerForm">
+    	<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
     	<input type="hidden" name="bno" value="${board.bno }">
     	<input type="hidden" name="page" value="${pageMaker.cri.page }">
     	<input type="hidden" name="perPageNum" value="${pageMaker.cri.perPageNum }">

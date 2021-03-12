@@ -27,23 +27,48 @@
 	    	default-target-url="/"
 	    />
 	    
+	    <!-- logout custom -->
+	    <logout
+	    	logout-url="/logout"
+	    	logout-success-url="/"
+	    	invalidate-session="true"
+	    />
+	    
 	    <!-- 403페이지 custom -->
 	    <!-- <access-denied-handler
 	    	error-page="/denied_page"
 	    />-->
 	    
-	    <!-- cors 설정(servlet-context.xml 에 cors 설정해야함 -->
-	    <cors />
+	    <!-- session 설정 -->
+	    <session-management invalid-session-url="/" >
+	    	<concurrency-control 
+	    		error-if-maximum-exceeded="true"
+	    		max-sessions="10"
+	    	/>
+	    </session-management>
+	    
+	    
 	    
 	</http>
 	
+	<!-- DB사용자 설정 확인 
+	<jdbc-user-service data-source-ref="dataSource" id="loginCheck"
+		users-by-username-query="SELECT userid as userid, password as userpw, enabled FROM user WHERE userid = ?"
+		authorities-by-username-query="SELECT userid as userid, authority FROM user WHERE userid = ?"
+	/>
+	--> 
+	
 	<authentication-manager>
-	    <authentication-provider>
+	    <authentication-provider user-service-ref="userService">
+	    	<!--  
 	        <user-service>
 	            <user name="user" password="userPw" authorities="ROLE_USER"/>
 	            <user name="guest" password="guest" authorities="ROLE_GUEST"/>
 	        </user-service>
+	        -->
 	    </authentication-provider>
 	</authentication-manager>
+	
+	<beans:bean id="userService" class="org.spring.service.CustomUserDetailService"></beans:bean>
     
 </beans:beans>
