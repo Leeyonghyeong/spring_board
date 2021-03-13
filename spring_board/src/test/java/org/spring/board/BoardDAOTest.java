@@ -22,7 +22,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"file:src/main/webapp/WEB-INF/spring/**/*.xml"})
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class BoardDAOTest {
 	
 	@Inject

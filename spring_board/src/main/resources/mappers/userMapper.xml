@@ -6,5 +6,9 @@
 	<select id="getUser" resultType="UserDetailVO">
 		SELECT * FROM user where userid = #{userid}
 	</select>
+	
+	<insert id="joinUser">
+		INSERT INTO user (userid, password, username, email) values (#{userid}, #{password}, #{username}, #{email})
+	</insert>
 
 </mapper>

@@ -36,7 +36,7 @@
                     
                     <sec:authorize access="isAuthenticated()">
 	                    <li class="nav-item">
-	                        <a class="nav-link" href="#"><sec:authentication property="principal.username"></sec:authentication></a>
+	                        <a class="nav-link" href=""><sec:authentication property="principal.username"></sec:authentication> 님</a>
 	                    </li>
 	                </sec:authorize>
 	                

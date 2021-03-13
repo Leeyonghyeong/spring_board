@@ -1,4 +1,4 @@
-package org.spring.service;
+package org.spring.security;
 
 import javax.inject.Inject;
 
@@ -19,7 +19,6 @@ public class CustomUserDetailService implements UserDetailsService{
 		UserDetailVO user = null;
 		
 		try {
-			System.out.println("detailservice---->" + username);
 			user = udDAO.getUserById(username);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -1,8 +1,8 @@
-package org.spring.dao;
+package org.spring.service;
 
 import org.spring.vo.UserDetailVO;
 
-public interface UserDetailDAO {
+public interface UserService {
 	
 	public UserDetailVO getUserById(String username) throws Exception;
 	

@@ -20,11 +20,11 @@
 	    
 	    <!-- login페이지 custom -->
 	    <form-login
-	    	username-parameter="userid"
-	    	password-parameter="userpw"
+	    	username-parameter="id"
+	    	password-parameter="pw"
 	    	login-processing-url="/login"
 	    	login-page="/login"
-	    	default-target-url="/"
+	    	default-target-url="/"	    	
 	    />
 	    
 	    <!-- logout custom -->
@@ -59,16 +59,26 @@
 	--> 
 	
 	<authentication-manager>
-	    <authentication-provider user-service-ref="userService">
-	    	<!--  
+	    <!-- <authentication-provider user-service-ref="userService">
 	        <user-service>
 	            <user name="user" password="userPw" authorities="ROLE_USER"/>
 	            <user name="guest" password="guest" authorities="ROLE_GUEST"/>
 	        </user-service>
-	        -->
 	    </authentication-provider>
+	        -->
+	        
+	    <authentication-provider ref="authProvider">
+	    </authentication-provider>
+	        
 	</authentication-manager>
 	
-	<beans:bean id="userService" class="org.spring.service.CustomUserDetailService"></beans:bean>
+	<!-- userDetail Service -->
+	<beans:bean id="userService" class="org.spring.security.CustomUserDetailService"></beans:bean>
+	
+	<!-- authenticationProvider Service -->
+	<beans:bean id="authProvider" class="org.spring.security.CustomAuthenticationProvider"></beans:bean>
+	
+	<!-- 패스워드 암호화 설정 -->
+	<beans:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></beans:bean>
     
 </beans:beans>

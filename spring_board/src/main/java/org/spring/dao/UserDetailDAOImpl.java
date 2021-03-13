@@ -17,7 +17,12 @@ public class UserDetailDAOImpl implements UserDetailDAO{
 	@Override
 	public UserDetailVO getUserById(String username) throws Exception {
 		// TODO Auto-generated method stub
-		System.out.println("username-----------> " + username);
 		return session.selectOne(namespace + ".getUser", username);
+	}
+	
+	@Override
+	public void joinUser(UserDetailVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		session.insert(namespace + ".joinUser", vo);
 	}
 }
