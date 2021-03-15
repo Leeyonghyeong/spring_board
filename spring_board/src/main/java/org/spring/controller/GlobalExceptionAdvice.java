@@ -4,7 +4,11 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
-// 모든 controller ERROR 처리
+/**
+* controller 에서 발생하는 모든 에러처리를 위한 클래스
+* 
+* @author L
+*/
 @ControllerAdvice
 public class GlobalExceptionAdvice {
 

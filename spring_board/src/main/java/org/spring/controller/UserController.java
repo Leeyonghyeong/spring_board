@@ -18,6 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+/**
+* Spring Security 를 위한 로그인 처리 클래스
+* 
+* @author L
+*/
 @Controller
 public class UserController {
 	
@@ -30,18 +35,33 @@ public class UserController {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	
+	/**
+	 * 커스텀한 로그인 페이지로 이동을 위한 함수
+	 * 
+	 */
 	@RequestMapping(value="/login")
 	public String loginPage(Model model) throws Exception {
 		
 		return "user/login";
 	}
 	
+	/**
+	 * 권한이 없는 사용자가 페이지 요청을 할때 보여주는 페이지 함수
+	 * 현재 사용하지 않음 사용하기 위해서 security xml 수정해야함.
+	 * 
+	 */
 	@RequestMapping(value="/denied_page")
 	public String deniedPage() throws Exception {
 		
 		return "denied_page";
 	}
 	
+	/**
+	 * 회원 가입을 위한 페이지
+	 * 
+	 * @param reqw  비밀번호 확인을 위해 재입력 받은 비밀번호 파라미터
+	 * @param vo  유저 vo객체에 유저 정보를 담기 위한 파라미터
+	 */
 	@RequestMapping(value="/join", method=RequestMethod.POST)
 	public String joinUser(@RequestParam("re-password") String repw, UserDetailVO vo, RedirectAttributes ra) throws Exception {
 		
@@ -54,6 +74,12 @@ public class UserController {
 		return "redirect:/login";
 	}
 	
+	
+	/**
+	 * 회원 가입시 사용자가 입력한 아이디가 존재하는지 여부를 확인하는 함수
+	 * 
+	 * @param userid  사용자가 입력한 아이디를 받아오는 파라미터
+	 */
 	@ResponseBody
 	@RequestMapping(value="/user/idValidate", method=RequestMethod.POST)
 	public ResponseEntity<String> idValidate(@RequestBody String userid) throws Exception {

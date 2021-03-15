@@ -133,6 +133,14 @@ function showModal(kind) {
     	document.getElementById("modal-body").innerHTML = '용량이 초과 되었습니다.(10M)';
     }
     
+    if(kind == "title") {
+    	document.getElementById("modal-body").innerHTML = '제목을 입력해 주세요.';
+    }
+    
+    if(kind == "content") {
+    	document.getElementById("modal-body").innerHTML = '내용을 입력해 주세요.';
+    }
+    
     document.getElementById("modalCommit").innerText = '확인';
 
     document.getElementById("modalClose").hidden = true;
@@ -144,6 +152,10 @@ form.addEventListener("submit", function(e) {
 	e.preventDefault();
 	
 	const imageField = document.querySelectorAll(".bi-x-circle-fill");
+	
+	const title = document.getElementById("title");
+	const writer = document.getElementById("writer");
+	const content = document.getElementById("content");
 	
 	
 	let index = 0;
@@ -159,6 +171,20 @@ form.addEventListener("submit", function(e) {
         
         index++;
     })
+    
+    if(title.value == "") {
+		showModal("title");
+		return;
+	} 
+	
+	if(writer.value == "") {
+		return;
+	}
+	
+	if(content.value == "") {
+		showModal("content");
+		return;
+	}
     
     form.submit();
 });

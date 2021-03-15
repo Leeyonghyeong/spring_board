@@ -26,6 +26,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+* 파일 업로드 클래스
+* 
+* @author L
+*/
 @RestController
 @RequestMapping("/files")
 public class UploadController {
@@ -34,6 +39,12 @@ public class UploadController {
 	@Resource(name="uploadPath")
 	private String uploadPath;
 	
+	
+	/**
+	 * 파일 업로드를 위한 함수
+	 * 
+	 * @param  files 파일에 대한 정보를 받아오는 파라미터
+	 */
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Map<String, Object>> upload(MultipartFile[] files) throws Exception {
 		
@@ -51,7 +62,6 @@ public class UploadController {
 		}
 		
 		for(MultipartFile file : files) {
-			logger.info("upload file : " + file.getOriginalFilename());
 			Map<String, Object> mapList = new HashMap<String, Object>();
 			
 			mapList.put("file", UploadFileUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes()));
@@ -66,6 +76,11 @@ public class UploadController {
 		return  new ResponseEntity<>(map, HttpStatus.CREATED);
 	}
 	
+	/**
+	 * 파일 업로드 해당 파일의 썸네일을 보여주기 위한 함수
+	 * 
+	 * @param  fileName  썸네일을 보여주기 위한 파일 경로 파라미터
+	 */
 	@RequestMapping(value="/displayFile")
 	public ResponseEntity<byte[]> displayFile(String fileName) throws Exception {
 		
@@ -99,9 +114,13 @@ public class UploadController {
 		return entity;
 	}
 	
+	/**
+	 * 업로드시 서버에 올라간 파일을 삭제해주기 위한 함수
+	 * 
+	 * @param  fileName  해당 파일 경로를 받아오는 함수
+	 */
 	@RequestMapping(value="/deleteFile", method=RequestMethod.POST)
 	public ResponseEntity<String> deleteFiles(@RequestBody String fileName) {
-		logger.info("delete file : " + fileName);
 		
 		String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
 		
@@ -119,9 +138,13 @@ public class UploadController {
 		return new ResponseEntity<String>("DELETE", HttpStatus.OK);
 	}
 	
+	/**
+	 * 해당 글에 있는 모든 파일을 삭제하기 위한 함수
+	 * 
+	 * @param  files  해당 글에 등록된 모든 파일의 경로를 받아오는 파라미터
+	 */
 	@RequestMapping(value="/deleteAllFile", method=RequestMethod.POST)
 	public ResponseEntity<String> deleteAllFiles(@RequestBody String files) {
-		logger.info("delete all file : " + files);
 		
 		String[] AllFiles = files.split(",");
 		

@@ -16,6 +16,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
+/**
+* 게시판에 대한 CRUD 클래스
+* 
+* @author L
+*/
 @Controller
 @RequestMapping("/*")
 public class BoardController {
@@ -24,11 +30,13 @@ public class BoardController {
 	@Inject
 	private BoardService service;
 	
-	// 모든 게시물 보기 및 검색 조건에 맞는 게시물 보기
+	/**
+	 * 글 목록을 보여주기 위한 함수
+	 * 
+	 * @param  scri 검색과 페이지 처리를 위한 파라미터
+	 */
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String board(SearchCriteria scri, Model model) throws Exception {
-		logger.info("----------------listAll----------------");
-		logger.info(scri.toString());
 		
 		model.addAttribute("list", service.listCriteria(scri));
 		PageMaker pageMaker = new PageMaker();
@@ -41,10 +49,14 @@ public class BoardController {
 		return "board/board";
 	}
 	
-	// 게시물 상세보기
+	/**
+	 * 글 상세보기 위한 함수
+	 * 
+	 * @param  bno 해당 글을 가져오기 위한 글 번호 파라미터
+	 * @param  scri 사용자가 검색 또는 어떤 페이지에서 왔는지 기억하기 위한 파라미터
+	 */
 	@RequestMapping(value="/list/{bno}", method=RequestMethod.GET)
 	public String getBoard(@PathVariable("bno") int bno, SearchCriteria scri, Model model) throws Exception {
-		logger.info("----------------list/" + bno + "----------------");
 		
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(scri);
@@ -58,21 +70,24 @@ public class BoardController {
 		return "board/detail";
 	}
 	
-	// 글 등록 페이지 이동
+	/**
+	 * 글 등록페이지로 이동하기 위한 함수
+	 */
 	@RequestMapping(value="/register", method=RequestMethod.GET)
-	public String registGET(BoardVO vo, Model model) throws Exception {
-		logger.info("----------------regist get----------------");
+	public String registGET(Model model) throws Exception {
 		
 		model.addAttribute("title", "register");
 		
 		return "board/register";
 	}
 	
-	// 글 등록 처리
+	/**
+	 * 글 등록을 위한 함수
+	 * 
+	 * @param  vo 글 등록을 위해 vo객체와 매핑시켜 주기 위한 파라미터
+	 */
 	@RequestMapping(value="/register", method=RequestMethod.POST)
 	public String registPOST(BoardVO vo, RedirectAttributes ra) throws Exception {
-		logger.info("----------------regist post----------------");
-		logger.info(vo.toString());
 		
 		service.regist(vo);
 		
@@ -81,10 +96,14 @@ public class BoardController {
 		return "redirect:/";
 	}
 	
-	// 글 수정 페이지 이동
+	/**
+	 * 글 수정페이지로 이동하기 위한 함수
+	 * 
+	 * @param  bno 글 수정을 위해 현재 글번호를 가져와 페이지에 뿌려주기 위한 파라미터
+	 * @param  scri 사용자가 검색 또는 어떤 페이지에서 왔는지 기억하기 위한 파라미터
+	 */
 	@RequestMapping(value="/update/{bno}", method=RequestMethod.GET)
 	public String updateGet(@PathVariable("bno") int bno, SearchCriteria scri, Model model) throws Exception {
-		logger.info("----------------updateGET/" + bno + "----------------");
 		
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(scri);
@@ -98,11 +117,15 @@ public class BoardController {
 		return "board/update";
 	}
 	
-	// 글 수정 처리
+	/**
+	 * 글 수정을 위한 함수
+	 * 
+	 * @param  vo 글 수정에 대한 정보를 vo객체에 담기 위한 파라미터
+	 * @param  scri 사용자가 검색 또는 어떤 페이지에서 왔는지 기억하기 위한 파라미터
+	 */
 	@RequestMapping(value="/update", method=RequestMethod.POST)
 	public String updatePOST(BoardVO vo, SearchCriteria scri, RedirectAttributes ra) throws Exception {
-		logger.info("----------------update----------------");
-		
+	
 		service.modify(vo);
 		
 		ra.addAttribute("page", scri.getPage());
@@ -114,10 +137,14 @@ public class BoardController {
 		return "redirect:/";
 	}
 	
-	// 글 삭제 처리
+	/**
+	 * 글 삭제를 위한 함수
+	 * 
+	 * @param  bno 해당 글을 삭제하기 위한 해당 글 번호 파라미터
+	 * @param  scri 사용자가 검색 또는 어떤 페이지에서 왔는지 기억하기 위한 파라미터
+	 */
 	@RequestMapping(value="/delete", method=RequestMethod.POST)
 	public String delete(@RequestParam("bno") int bno, SearchCriteria scri, RedirectAttributes ra) throws Exception {
-		logger.info("----------------delete/" + bno + "----------------");
 		
 		service.delete(bno);
 		
